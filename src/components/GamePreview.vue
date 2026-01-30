@@ -15,9 +15,9 @@ const emit = defineEmits<{
 
 // computers
 const formattedPlayers = computed(() => `${props.players[0]}` + (
-    props.players[1] === 999
-    ? "+"
-    : `- ${props.players[1]}`
+    isFinite(props.players[1])
+    ? `- ${props.players[1]}`
+    : "+"
 ) + " players")
 const isOpen = computed(() => props.openCardIndex === props.id)
 
@@ -29,11 +29,11 @@ function toggleOpen() {
 </script>
 
 <template>
-    <div class="card" :class="{ open: isOpen }">
+    <div class="card" :class="{ open: isOpen }" :style="{ backgroundColor: isOpen ? props.color : '#FFFFFF' }">
         <button id="toggle-button" @click="toggleOpen">{{ title }}</button>
 
         <template v-if="isOpen">
-            <p>{{ duration }} min • {{ formattedPlayers }}</p>
+            <p id="info">{{ duration }} min • {{ formattedPlayers }}</p>
             <p id="description">{{ description }}</p>
             <button id="play-button">Play now</button>
         </template>
@@ -51,7 +51,8 @@ function toggleOpen() {
         flex-direction: column;
         width: 300px;
         height: 400px;
-        background: #F8F8F8;
+        // background: #F8F8F8;
+        // background: lime
         border: 2px solid #000000;
         border-radius: 16px;
         padding-left: 24px;
@@ -61,9 +62,14 @@ function toggleOpen() {
     }
 }
 
+#info {
+    font-size: 18px;;
+}
+
 #description {
     width: 100%;
     height: 100%;
+    font-size: 16px;
 }
 
 #toggle-button {
@@ -84,5 +90,6 @@ function toggleOpen() {
     background: #000000;
     border-radius: 16px;
     align-self: center;
+    font-size: 16px;
 }
 </style>

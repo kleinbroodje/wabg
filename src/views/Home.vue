@@ -3,11 +3,7 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 
 import GamePreview from '../components/GamePreview.vue';
-import _gamePreviewsJson from '@/static/gamePreviews.json'
-import type { IGamePreview } from "@/commons/types.ts"
-
-// globals
-const previews: IGamePreview[] = _gamePreviewsJson as IGamePreview[];
+import { gamePreviews } from '@/commons/gamePreviews.ts'
 
 // refs
 const openCardIndex: Ref<number | null> = ref(null);
@@ -26,7 +22,7 @@ function onSetOpen(new_id: number) {
 
 <template>
     <GamePreview
-        v-for="(preview, index) in previews"
+        v-for="(preview, index) in gamePreviews"
         :key="index"
         v-bind="preview"
         :openCardIndex="openCardIndex"
