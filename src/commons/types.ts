@@ -4,4 +4,5 @@ export interface IGamePreview {
     description: string,
     duration: number,
     players: [number, number],  // min-max (2+ for example would be [2, 999])
+    color: string,
 }
