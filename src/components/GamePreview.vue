@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import type { IGamePreview } from '@/commons/types';
 
 // props
-const props = defineProps<IGamePreview & { openCardIndex: number }>()
+const props = defineProps<IGamePreview & { openCardIndex: number | null }>()
 
 // emits
 const emit = defineEmits<{
