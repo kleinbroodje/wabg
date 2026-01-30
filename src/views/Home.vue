@@ -14,7 +14,12 @@ const openCardIndex: Ref<number | null> = ref(null);
 
 // functions
 function onSetOpen(new_id: number) {
-    openCardIndex.value = new_id
+    // check if the same card is clicked: if so, close it (set active to null)
+    if (new_id === openCardIndex.value) {
+        openCardIndex.value = null;
+    } else {
+        openCardIndex.value = new_id
+    }
 }
 
 </script>
