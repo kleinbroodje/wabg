@@ -46,7 +46,7 @@ function toggleOpen() {
     margin: 10px;
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0s;
     
-    &.card.open {
+    &.open {
         display: flex;
         flex-direction: column;
         width: 300px;
