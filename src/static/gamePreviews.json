@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "title": "Werewolves",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
+        "duration": 30,
+        "players": [4, 999]
+    },
+    {
+        "id": 1,
+        "title": "Charades",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
+        "duration": 15,
+        "players": [2, 999]
+    },
+    {
+        "id": 2,
+        "title": "30 seconds",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
+        "duration": 10,
+        "players": [2, 999]
+    },
+    {
+        "id": 3,
+        "title": "Chameleon",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
+        "duration": 15,
+        "players": [3, 999]
+    }
+]
