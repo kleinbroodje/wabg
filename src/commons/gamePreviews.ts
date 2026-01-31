@@ -1,7 +1,7 @@
 import type { IGamePreview } from "./types"
 import { color } from "./color"
 
-export const gamePreviews = [
+const gamePreviews = [
     {
         id: 0,
         title: "Mystories",
@@ -9,6 +9,7 @@ export const gamePreviews = [
         duration: 15,
         players: [2, Infinity],
         color: color.neutral.grey3,
+        route: "/mystories",
     },
     {
         id: 1,
@@ -17,29 +18,30 @@ export const gamePreviews = [
         duration: 30,
         players: [4, Infinity],
         color: color.brand.peachy,
+        route: "/werewolves",
     },
     {
         id: 2,
-        title: "Charades",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-        duration: 15,
-        players: [2, Infinity],
-        color: color.brand.airBlue,
-    },
-    {
-        id: 3,
-        title: "30 seconds",
+        title: "Half a minute",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 10,
         players: [2, Infinity],
         color: color.brand.neonGreen,
+        route: "/halfAMinute",
     },
     {
-        id: 4,
+        id: 3,
         title: "Chameleon",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 15,
         players: [3, Infinity],
         color: color.brand.ultraSassyPink,
+        route: "/chameleon",
     }
 ] as IGamePreview[]
+
+for (let [index, preview] of gamePreviews.entries()) {
+    preview.id = index;
+}
+
+export { gamePreviews };
