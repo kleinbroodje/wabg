@@ -46,8 +46,8 @@ function toggleOpen() {
     margin: 10px;
 
     transition:
-        background-color 0s,
-        all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        background-color 0s;
     
     &.open {
         display: flex;
