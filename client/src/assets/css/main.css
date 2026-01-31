@@ -25,4 +25,10 @@ p {
 
 button {
     font-family: "Syne-Medium";
+    height: 56px;
+    width: 306px;
+    border-radius: 8px;
+    color: #F8F8F8;
+    background: #000000;
+    font-size: 16px;
 }

@@ -10,13 +10,14 @@ import (
 )
 
 type Room struct {
+	Game   string
 	RoomId string
 }
 
 // consts
 const roomIdLength int = 4
 
-var roomIds = []Room{}
+var rooms = []Room{}
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
@@ -39,8 +40,10 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 
 	//create new room instance
-	roomId := generateRoomId(roomIdLength, roomIds)
-	room := Room{RoomId: roomId}
+	room := Room{
+		Game:   r.PathValue("game"),
+		RoomId: generateRoomId(roomIdLength, rooms),
+	}
 
 	//serialize room instance to json
 	j, err := json.Marshal(room)
@@ -54,9 +57,18 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//server response
-	roomIds = append(roomIds, room)
+	rooms = append(rooms, room)
 	w.WriteHeader(http.StatusCreated)
 	w.Write(j)
+}
+
+func handleJoinRoom(w http.ResponseWriter, r *http.Request) {
+	for _, v := range rooms {
+		if v.RoomId == r.PathValue("id") {
+			w.WriteHeader(http.StatusOK)
+			break
+		}
+	}
 }
 
 func generateRoomId(length int, currentRoomIds []Room) string {
@@ -74,14 +86,17 @@ func generateRoomId(length int, currentRoomIds []Room) string {
 		}
 		return string(id)
 	}
-
 }
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /api/room", handleCreateRoom)
+
+	//handle http requests
+	mux.HandleFunc("POST /api/{game}/rooms", handleCreateRoom)
+	mux.HandleFunc("GET /api/{game}/rooms/{id}", handleJoinRoom)
 	mux.HandleFunc("/ws", handleWebSocket)
 
+	//start http server
 	fmt.Println("Websocket server started on on port 8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
 		fmt.Println("Error starting server: ", err)

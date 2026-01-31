@@ -88,12 +88,7 @@ function toggleOpen() {
 }
 
 #play-button {
-    color: #F8F8F8;
-    width: 280px;
-    height: 100px;
-    background: #000000;
-    border-radius: 16px;
     align-self: center;
-    font-size: 16px;
+    flex-shrink: 0;
 }
 </style>
