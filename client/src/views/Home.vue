@@ -21,13 +21,17 @@ function onSetOpen(new_id: number) {
 </script>
 
 <template>
-    <GamePreview
-        v-for="(preview, index) in gamePreviews"
-        :key="index"
-        v-bind="preview"
-        :openCardIndex="openCardIndex"
-        @set-open="onSetOpen"
-    />
+    <main>
+        <GamePreview
+            v-for="(preview, index) in gamePreviews"
+            :key="index"
+            v-bind="preview"
+            :openCardIndex="openCardIndex"
+            @set-open="onSetOpen"
+        />
+    </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

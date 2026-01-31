@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, setDevtoolsHook } from 'vue';
 import type { IGamePreview } from '@/commons/types';
 import { useRouter } from 'vue-router';
 
