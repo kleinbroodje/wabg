@@ -44,7 +44,10 @@ function toggleOpen() {
 <style scoped lang="scss">
 .card {
     margin: 10px;
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0s;
+
+    transition:
+        background-color 0s,
+        all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     
     &.open {
         display: flex;
