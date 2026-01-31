@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IGamePreview } from '@/commons/types';
+import { useRouter } from 'vue-router';
 
 // props
 const props = defineProps<IGamePreview & { openCardIndex: number | null }>()
@@ -10,8 +11,8 @@ const emit = defineEmits<{
     (e: "setOpen", id: number): void
 }>()
 
-// refs
-
+// consts
+const router = useRouter()
 
 // computers
 const formattedPlayers = computed(() => `${props.players[0]}` + (
@@ -35,7 +36,7 @@ function toggleOpen() {
         <template v-if="isOpen">
             <p id="info">{{ duration }} min • {{ formattedPlayers }}</p>
             <p id="description">{{ description }}</p>
-            <button id="play-button">Play now</button>
+            <button id="play-button" @click="router.push(props.route)">Play now</button>
         </template>
 
     </div>  
