@@ -44,13 +44,18 @@ function toggleOpen() {
 <style scoped lang="scss">
 .card {
     margin: 10px;
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0s;
+
+    // transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0s;
+    transition:
+        background-color 0s,
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     
     &.open {
+        transform: scaleY(10);
         display: flex;
         flex-direction: column;
         width: 300px;
-        height: 400px;
+        // height: 400px;
         // background: #F8F8F8;
         // background: lime
         border: 2px solid #000000;
