@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue"
+import NotFound from "@/views/NotFound.vue";
 import Mystories from "@/views/Mystories.vue";
 import Werewolves from "@/views/Werewolves.vue";
 import HalfAMinute from "@/views/HalfAMinute.vue";
@@ -30,7 +31,12 @@ const routes = [
         path: "/half-a-minute",
         name: "halfAMinute",
         component: HalfAMinute,
-    }
+    },
+    {
+        path: "/:pathMatch(.*)",
+        name: "NotFound",
+        component: NotFound,
+    },
 ]
 
 const router = createRouter({
