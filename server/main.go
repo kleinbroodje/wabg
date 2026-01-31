@@ -1,12 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"math/rand/v2"
 	"net/http"
 
 	"github.com/gorilla/websocket"
 )
 
+type Room struct {
+	RoomId string
+}
+
+// consts
+const roomIdLength int = 4
+
+var roomIds = []Room{}
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
@@ -23,33 +33,57 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 
 	fmt.Println("Client connected")
+}
 
-	// read messages from the client
+// creates a new room and returns the room to the client
+func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
+
+	//create new room instance
+	roomId := generateRoomId(roomIdLength, roomIds)
+	room := Room{RoomId: roomId}
+
+	//serialize room instance to json
+	j, err := json.Marshal(room)
+	if err != nil {
+		http.Error(
+			w,
+			err.Error(),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	//server response
+	roomIds = append(roomIds, room)
+	w.WriteHeader(http.StatusCreated)
+	w.Write(j)
+}
+
+func generateRoomId(length int, currentRoomIds []Room) string {
+	const charset string = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 	for {
-		messageType, message, err := conn.ReadMessage()
-
-		if err != nil {
-			fmt.Println("Error reading message: ", err)
-			break
+		id := ""
+		for i := 0; i < length; i++ {
+			id += string(charset[rand.IntN(len(charset))])
 		}
-
-		fmt.Println("Message received: ", string(message))
-
-		// write message back to the client
-		if err := conn.WriteMessage(messageType, message); err != nil {
-			fmt.Println("Error writing message: ", err)
-			break
+		for _, v := range currentRoomIds {
+			if v.RoomId == id {
+				continue
+			}
 		}
+		return string(id)
 	}
+
 }
 
 func main() {
 	mux := http.NewServeMux()
+	mux.HandleFunc("POST /api/room", handleCreateRoom)
 	mux.HandleFunc("/ws", handleWebSocket)
 
-	fmt.Println("Websocket server started on localhost:8080/ws")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	fmt.Println("Websocket server started on on port 8080")
+	if err := http.ListenAndServe(":8080", mux); err != nil {
 		fmt.Println("Error starting server: ", err)
 	}
 }
