@@ -3,7 +3,7 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 
 import GamePreview from '../components/GamePreview.vue';
-import { gamePreviews } from '@/commons/gamePreviews.ts'
+import { gamePreviews } from '@/commons/gamePreviews'
 
 // refs
 const openCardIndex: Ref<number | null> = ref(null);
