@@ -20,47 +20,54 @@ function onFlip() {
 </script>
 
 <template>
-    <div id="card" :class="{ flipped: flipped }">
+    <main>
+        <div id="card" :class="{ flipped: flipped }">
 
-        <div id="card-front">
-            <p id="difficulty">{{ difficultyEmoji }}</p>
-            <p id="title">{{ title }}</p>
-            <hr>
-            <p id="description">{{ description }}</p>
-            <button class="flip-button" @click="onFlip()">show answer</button>
+            <div id="card-front">
+                <p id="difficulty">{{ difficultyEmoji }}</p>
+                <p id="title">{{ title }}</p>
+                <hr>
+                <p id="description">{{ description }}</p>
+                <button class="flip-button" @click="onFlip()">show answer</button>
+            </div>
+
+            <div id="card-back">
+                <p id="difficulty">{{ difficultyEmoji }}</p>
+                <p id="title">{{ title }}</p>
+                <hr>
+                <p id="answer-indicator">Answer:</p>
+                <p id="answer">{{ answer }}</p>
+                <button id="show-clue-button" class="flip-button" @click="onFlip()">show clue</button>
+            </div>
+
         </div>
-
-        <div id="card-back">
-            <p id="difficulty">{{ difficultyEmoji }}</p>
-            <p id="title">{{ title }}</p>
-            <hr>
-            <p id="answer-indicator">Answer:</p>
-            <p id="answer">{{ answer }}</p>
-            <button class="flip-button" @click="onFlip()">show clue</button>
-        </div>
-
-    </div>
+    </main>
 </template>
 
 <style scoped lang="scss">
 
+main {
+    perspective: 3000px;
+}
+
 // CARD
 #card {
     position: relative;
-    perspective: 1000px;
     transform-style: preserve-3d;
     transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 #card.flipped {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg)
 }
 
 // FRONT AND BACK
 #card-front,
 #card-back {
     // 3d shit
+    width: 100%;
     position: absolute;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 
     margin: 10px;
@@ -128,6 +135,11 @@ hr {
 
 #answer {
     font-size: 18px;
+}
+
+#show-clue-button {
+    background-color: white;
+    color: black;
 }
 
 </style>
