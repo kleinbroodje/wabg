@@ -7,22 +7,28 @@ import werewolvesRoutes from '@/modules/werewolves/routes'
 import chameleonRoutes from '@/modules/chameleon/routes'
 import halfAMinuteRoutes from '@/modules/halfAMinute/routes'
 
-const routes = [
+var routes = [
     {
         path: "/",
         name: "home",
         component: Home,
-    },
-    mystoriesRoutes,
-    werewolvesRoutes,
-    chameleonRoutes,
-    halfAMinuteRoutes,
+    }
+]
+console.log(chameleonRoutes)
+
+routes = routes.concat(mystoriesRoutes)
+routes = routes.concat(werewolvesRoutes)
+routes = routes.concat(chameleonRoutes)
+routes = routes.concat(halfAMinuteRoutes)
+
+//add not found page to routes
+routes.push(
     {
-        path: "/:pathMatch(.*)",
+        path: "/:pathMatch(.*)*",
         name: "NotFound",
         component: NotFound,
     },
-]
+)
 
 const router = createRouter({
     history: createWebHistory(),
