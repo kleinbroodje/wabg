@@ -10,7 +10,7 @@ npm install
 ```
 
 ```sh
-npm run dev
+npm run dev -- --host
 ```
 
 ## To run the server 
