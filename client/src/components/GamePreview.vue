@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, setDevtoolsHook } from 'vue';
-import type { IGamePreview } from '@/commons/types';
+import type { Game } from '@/commons/types';
 import { useRouter } from 'vue-router';
 
 // props
-const props = defineProps<IGamePreview & { openCardIndex: number | null }>()
+const props = defineProps<Game & { openCardIndex: number | null }>()
 
 // emits
 const emit = defineEmits<{

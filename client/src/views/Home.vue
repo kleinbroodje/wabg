@@ -3,7 +3,7 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 
 import GamePreview from '../components/GamePreview.vue';
-import { gamePreviews } from '@/commons/gamePreviews'
+import { games } from '@/commons/games'
 
 // refs
 const openCardIndex: Ref<number | null> = ref(null);
@@ -23,7 +23,7 @@ function onSetOpen(new_id: number) {
 <template>
     <main>
         <GamePreview
-            v-for="(preview, index) in gamePreviews"
+            v-for="(preview, index) in games"
             :key="index"
             v-bind="preview"
             :openCardIndex="openCardIndex"

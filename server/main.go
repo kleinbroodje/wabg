@@ -9,19 +9,30 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// models
 type Room struct {
-	Game   string
-	RoomId string
+	GameId     int
+	RoomId     string
+	MinPlayers int
+	MaxPlayers int
+}
+
+// requests
+type CreateRoomRequest struct {
+	GameId     int `json:"gameId"`
+	MinPlayers int `json:"minPlayers"`
+	MaxPlayers int `json:"maxPlayers"`
 }
 
 // consts
 const roomIdLength int = 4
 
-var rooms = []Room{}
+// globals
+var rooms = map[string]*Room{}
+
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
 }
 
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
@@ -39,10 +50,19 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 // creates a new room and returns the room to the client
 func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 
+	// parse req body json
+	var req CreateRoomRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	//create new room instance
 	room := Room{
-		Game:   r.PathValue("game"),
-		RoomId: generateRoomId(roomIdLength, rooms),
+		GameId:     req.GameId,
+		RoomId:     generateRoomId(roomIdLength, rooms),
+		MinPlayers: req.MinPlayers,
 	}
 
 	//serialize room instance to json
@@ -57,21 +77,21 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//server response
-	rooms = append(rooms, room)
+	rooms[room.RoomId] = &room
 	w.WriteHeader(http.StatusCreated)
 	w.Write(j)
 }
 
 func handleJoinRoom(w http.ResponseWriter, r *http.Request) {
-	for _, v := range rooms {
-		if v.RoomId == r.PathValue("id") {
-			w.WriteHeader(http.StatusOK)
-			break
-		}
+	_, exists := rooms[r.PathValue("id")]
+	if !exists {
+		w.WriteHeader(http.StatusNotFound)
 	}
+	w.WriteHeader(http.StatusOK)
+
 }
 
-func generateRoomId(length int, currentRoomIds []Room) string {
+func generateRoomId(length int, currentRoomIds map[string]*Room) string {
 	const charset string = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 	for {
@@ -92,8 +112,8 @@ func main() {
 	mux := http.NewServeMux()
 
 	//handle http requests
-	mux.HandleFunc("POST /api/{game}/rooms", handleCreateRoom)
-	mux.HandleFunc("GET /api/{game}/rooms/{id}", handleJoinRoom)
+	mux.HandleFunc("POST /api/rooms", handleCreateRoom)
+	mux.HandleFunc("POST /api/rooms/{roomId}/players", handleJoinRoom)
 	mux.HandleFunc("/ws", handleWebSocket)
 
 	//start http server

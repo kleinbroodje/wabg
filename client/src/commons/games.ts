@@ -1,7 +1,7 @@
-import type { IGamePreview } from "./types"
+import type { Game } from "./types"
 import { color } from "./color"
 
-const gamePreviews = [
+const games = [
     {
         id: 0,
         title: "Mystories",
@@ -38,10 +38,10 @@ const gamePreviews = [
         color: color.brand.ultraSassyPink,
         route: "/chameleon",
     }
-] as IGamePreview[]
+] as Game[]
 
-for (let [index, preview] of gamePreviews.entries()) {
+for (let [index, preview] of games.entries()) {
     preview.id = index;
 }
 
-export { gamePreviews };
+export { games };
