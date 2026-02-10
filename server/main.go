@@ -11,17 +11,22 @@ import (
 
 // models
 type Room struct {
-	GameId     int
+	GameId     string
 	RoomId     string
 	MinPlayers int
 	MaxPlayers int
+	Players    map[string]*Player
+}
+
+type Player struct {
+	Name string
 }
 
 // requests
 type CreateRoomRequest struct {
-	GameId     int `json:"gameId"`
-	MinPlayers int `json:"minPlayers"`
-	MaxPlayers int `json:"maxPlayers"`
+	GameId     string `json:"gameId"`
+	MinPlayers int    `json:"minPlayers"`
+	MaxPlayers int    `json:"maxPlayers"`
 }
 
 // consts
@@ -63,6 +68,8 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 		GameId:     req.GameId,
 		RoomId:     generateRoomId(roomIdLength, rooms),
 		MinPlayers: req.MinPlayers,
+		MaxPlayers: req.MaxPlayers,
+		Players:    map[string]*Player{},
 	}
 
 	//serialize room instance to json

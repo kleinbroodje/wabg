@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { createRoom } from '@/commons/api';
 import { games } from '@/commons/games';
-
-const props = defineProps({
-  id: Number,
-})
-
 </script>
 
 <template>
   <div class="btn-container">
     <button @click="createRoom(
-      props.id!, 
-      games[props.id!]!.players[0], 
-      games[props.id!]!.players[1]
+      'chameleon', 
+      games.chameleon!.players[0], 
+      games.chameleon!.players[1],
+      
     )">
       Create room
     </button>

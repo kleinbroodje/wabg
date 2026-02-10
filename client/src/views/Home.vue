@@ -6,15 +6,15 @@ import GamePreview from '../components/GamePreview.vue';
 import { games } from '@/commons/games'
 
 // refs
-const openCardIndex: Ref<number | null> = ref(null);
+const openCardId: Ref<string | null> = ref(null);
 
 // functions
-function onSetOpen(new_id: number) {
+function onSetOpen(new_id: string) {
     // check if the same card is clicked: if so, close it (set active to null)
-    if (new_id === openCardIndex.value) {
-        openCardIndex.value = null;
+    if (new_id === openCardId.value) {
+        openCardId.value = null;
     } else {
-        openCardIndex.value = new_id
+        openCardId.value = new_id
     }
 }
 
@@ -23,10 +23,10 @@ function onSetOpen(new_id: number) {
 <template>
     <main>
         <GamePreview
-            v-for="(preview, index) in games"
+            v-for="(preview, _, index) in games"
             :key="index"
             v-bind="preview"
-            :openCardIndex="openCardIndex"
+            :openCardId="openCardId"
             @set-open="onSetOpen"
         />
     </main>

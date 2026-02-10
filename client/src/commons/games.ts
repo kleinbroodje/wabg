@@ -1,47 +1,47 @@
 import type { Game } from "./types"
 import { color } from "./color"
+import Mystories from "@/modules/mystories/Mystories.vue";
+import Werewolves from "@/modules/werewolves/Werewolves.vue";
+import HalfAMinute from "@/modules/halfAMinute/HalfAMinute.vue";
+import Chameleon from "@/modules/chameleon/Chameleon.vue";
 
-const games = [
-    {
-        id: 0,
+const games: Record<string, Game> = {
+    mystories: {
+        id: "mystories",
         title: "Mystories",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 15,
         players: [2, Infinity],
         color: color.neutral.grey3,
-        route: "/mystories",
+        entry: Mystories,
     },
-    {
-        id: 1,
+    werewolves: {
+        id: "werewolves",
         title: "Werewolves",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 30,
         players: [4, Infinity],
         color: color.brand.peachy,
-        route: "/werewolves",
+        entry: Werewolves,
     },
-    {
-        id: 2,
+    halfAMinute: {
+        id: "halfAMinute",
         title: "Half a minute",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 10,
         players: [2, Infinity],
         color: color.brand.neonGreen,
-        route: "/halfAMinute",
+        entry: HalfAMinute,
     },
-    {
-        id: 3,
+    chameleon: {
+        id: "chameleon",
         title: "Chameleon",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
         duration: 15,
         players: [3, Infinity],
         color: color.brand.ultraSassyPink,
-        route: "/chameleon",
+        entry: Chameleon,
     }
-] as Game[]
-
-for (let [index, preview] of games.entries()) {
-    preview.id = index;
 }
 
 export { games };

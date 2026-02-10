@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, setDevtoolsHook } from 'vue';
+import { computed } from 'vue';
 import type { Game } from '@/commons/types';
 import { useRouter } from 'vue-router';
 
 // props
-const props = defineProps<Game & { openCardIndex: number | null }>()
+const props = defineProps<Game & { openCardId: string | null }>()
 
 // emits
 const emit = defineEmits<{
-    (e: "setOpen", id: number): void
+    (e: "setOpen", id: string): void
 }>()
 
 // consts
@@ -20,7 +20,7 @@ const formattedPlayers = computed(() => `${props.players[0]}` + (
     ? `- ${props.players[1]}`
     : "+"
 ) + " players")
-const isOpen = computed(() => props.openCardIndex === props.id)
+const isOpen = computed(() => props.openCardId === props.id)
 
 // functions
 function toggleOpen() {
@@ -36,7 +36,7 @@ function toggleOpen() {
         <template v-if="isOpen">
             <p id="info">{{ duration }} min • {{ formattedPlayers }}</p>
             <p id="description">{{ description }}</p>
-            <button id="play-button" @click="router.push(props.route)">Play now</button>
+            <button id="play-button" @click="router.push({ name: 'game', params: { gameId: props.id }})">Play now</button>
         </template>
 
     </div>  
