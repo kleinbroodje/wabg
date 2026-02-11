@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createRoom } from '@/commons/api';
+import { createRoom } from '@/components/api';
 import { games } from '@/commons/games';
 </script>
 
@@ -9,7 +9,7 @@ import { games } from '@/commons/games';
       'chameleon', 
       games.chameleon!.players[0], 
       games.chameleon!.players[1],
-      
+
     )">
       Create room
     </button>

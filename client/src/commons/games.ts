@@ -1,9 +1,9 @@
 import type { Game } from "./types"
 import { color } from "./color"
-import Mystories from "@/modules/mystories/Mystories.vue";
-import Werewolves from "@/modules/werewolves/Werewolves.vue";
-import HalfAMinute from "@/modules/halfAMinute/HalfAMinute.vue";
-import Chameleon from "@/modules/chameleon/Chameleon.vue";
+import Mystories from "@/games/mystories/Mystories.vue";
+import Werewolves from "@/games/werewolves/Werewolves.vue";
+import HalfAMinute from "@/games/halfAMinute/HalfAMinute.vue";
+import Chameleon from "@/games/chameleon/Chameleon.vue";
 
 const games: Record<string, Game> = {
     mystories: {
