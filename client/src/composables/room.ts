@@ -30,6 +30,10 @@ export default function useRoom() {
 
         const response = await fetch(`/api/rooms/${roomId}/players`, {
             method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: "username",
+            })
         });
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);

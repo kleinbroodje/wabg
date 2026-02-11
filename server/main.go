@@ -11,15 +11,17 @@ import (
 
 // models
 type Room struct {
-	GameId     string             `json:"gameId"`
-	RoomId     string             `json:"roomId"`
-	MinPlayers int                `json:"minPlayers"`
-	MaxPlayers int                `json:"maxPlayers"`
-	Players    map[string]*Player `json:"players"`
+	GameId     string          `json:"gameId"`
+	RoomId     string          `json:"roomId"`
+	MinPlayers int             `json:"minPlayers"`
+	MaxPlayers int             `json:"maxPlayers"`
+	Players    map[int]*Player `json:"players"`
 }
 
 type Player struct {
+	Id   int
 	Name string
+	Conn *websocket.Conn
 }
 
 // requests
@@ -27,6 +29,10 @@ type CreateRoomRequest struct {
 	GameId     string `json:"gameId"`
 	MinPlayers int    `json:"minPlayers"`
 	MaxPlayers int    `json:"maxPlayers"`
+}
+
+type JoinRoomRequest struct {
+	Name string `json:"name"`
 }
 
 // consts
@@ -78,7 +84,7 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 		RoomId:     generateRoomId(roomIdLength, rooms),
 		MinPlayers: req.MinPlayers,
 		MaxPlayers: req.MaxPlayers,
-		Players:    map[string]*Player{},
+		Players:    map[int]*Player{},
 	}
 
 	//serialize room instance to json
@@ -99,11 +105,27 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleJoinRoom(w http.ResponseWriter, r *http.Request) {
-	_, exists := rooms[r.PathValue("roomId")]
+	room, exists := rooms[r.PathValue("roomId")]
 	if !exists {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
+
+	var req JoinRoomRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	playerId := len(room.Players) + 1
+	player := Player{
+		Id:   playerId,
+		Name: req.Name,
+		Conn: nil,
+	}
+
+	room.Players[playerId] = &player
 	w.WriteHeader(http.StatusOK)
 
 }
