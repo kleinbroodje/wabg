@@ -7,5 +7,5 @@ export interface Game {
     duration: number,
     players: [number, number],  // min-max (2+ for example would be [2, 999])
     color: string,
-    entry: Component,
-}
+    entry: Component, // initial view for a game 
+}   

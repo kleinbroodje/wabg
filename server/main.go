@@ -35,9 +35,12 @@ const roomIdLength int = 4
 // globals
 var rooms = map[string]*Room{}
 
+// specifies the parameters for upgrading http conn to ws
 var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+	// CheckOrigin is a security function that controls which clients can connect
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +51,14 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer conn.Close()
+
+	for {
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			break
+		}
+		conn.WriteMessage(websocket.TextMessage, msg) // echo back
+	}
 
 	fmt.Println("Client connected")
 }
