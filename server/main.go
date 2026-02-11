@@ -11,11 +11,11 @@ import (
 
 // models
 type Room struct {
-	GameId     string
-	RoomId     string
-	MinPlayers int
-	MaxPlayers int
-	Players    map[string]*Player
+	GameId     string             `json:"gameId"`
+	RoomId     string             `json:"roomId"`
+	MinPlayers int                `json:"minPlayers"`
+	MaxPlayers int                `json:"maxPlayers"`
+	Players    map[string]*Player `json:"players"`
 }
 
 type Player struct {
@@ -59,8 +59,6 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 		conn.WriteMessage(websocket.TextMessage, msg) // echo back
 	}
-
-	fmt.Println("Client connected")
 }
 
 // creates a new room and returns the room to the client
@@ -101,9 +99,10 @@ func handleCreateRoom(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleJoinRoom(w http.ResponseWriter, r *http.Request) {
-	_, exists := rooms[r.PathValue("id")]
+	_, exists := rooms[r.PathValue("roomId")]
 	if !exists {
 		w.WriteHeader(http.StatusNotFound)
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 
