@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { createRoom } from '@/components/api';
+import useRoom from '@/composables/room'
 import { games } from '@/commons/games';
+
+const { createRoom, joinRoom } = useRoom()
+
 </script>
 
 <template>

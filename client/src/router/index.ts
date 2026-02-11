@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router"
 import Home from "../views/Home.vue"
 import NotFound from "../views/NotFound.vue";
 import GameEntry from "@/views/GameEntry.vue";
+import Room from "@/views/Room.vue";
+import Join from "@/views/Join.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -12,8 +14,17 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/games/:gameId",
         name: "game",
-        component: GameEntry
-
+        component: GameEntry,
+    },
+    {
+        path: "/rooms/:roomId",
+        name: "room",
+        component: Room,
+    },
+    {
+        path: "/join",
+        name: "join",
+        component: Join,
     },
     {
         path: "/:pathMatch(.*)*",

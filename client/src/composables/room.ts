@@ -1,9 +1,12 @@
 import { ref } from "vue"
 import type { createRoomResponse } from "../commons/types";
+import { useRouter } from "vue-router";
 
 const socket = ref<WebSocket | null>(null)
 
 export default function useRoom() {
+    const joined = ref(false)
+    const router = useRouter()
 
     async function createRoom(gameId: string, minPlayers: number, maxPlayers: number) {
         const response = await fetch("/api/rooms", {
@@ -20,11 +23,11 @@ export default function useRoom() {
         }
 
         const json: createRoomResponse = await response.json()
-        console.log(json)
         joinRoom(json.roomId)
     }
 
     async function joinRoom(roomId: string) {
+
         const response = await fetch(`/api/rooms/${roomId}/players`, {
             method: "POST",
         });
@@ -37,6 +40,8 @@ export default function useRoom() {
         socket.value = new WebSocket('ws://localhost:8080/ws')
         socket.value.onopen = () => { console.log("connected to websocket server") }
         socket.value.onclose = () => { socket.value = null }
+
+        router.push({ name: 'room', params: { roomId: roomId } })
     }
 
     return { createRoom, joinRoom }
