@@ -22,24 +22,24 @@ function onFlip() {
 <template>
     <main>
         <div id="card" :class="{ flipped: flipped }">
+            <div id="card-inner">
+                <div id="card-front">
+                    <p id="difficulty">{{ difficultyEmoji }}</p>
+                    <p id="title">{{ title }}</p>
+                    <hr>
+                    <p id="description">{{ description }}</p>
+                    <button class="flip-button" @click="onFlip()">show answer</button>
+                </div>
 
-            <div id="card-front">
-                <p id="difficulty">{{ difficultyEmoji }}</p>
-                <p id="title">{{ title }}</p>
-                <hr>
-                <p id="description">{{ description }}</p>
-                <button class="flip-button" @click="onFlip()">show answer</button>
+                <div id="card-back">
+                    <p id="difficulty">{{ difficultyEmoji }}</p>
+                    <p id="title">{{ title }}</p>
+                    <hr>
+                    <p id="answer-indicator">Answer:</p>
+                    <p id="answer">{{ answer }}</p>
+                    <button id="show-clue-button" class="flip-button" @click="onFlip()">show clue</button>
+                </div>
             </div>
-
-            <div id="card-back">
-                <p id="difficulty">{{ difficultyEmoji }}</p>
-                <p id="title">{{ title }}</p>
-                <hr>
-                <p id="answer-indicator">Answer:</p>
-                <p id="answer">{{ answer }}</p>
-                <button id="show-clue-button" class="flip-button" @click="onFlip()">show clue</button>
-            </div>
-
         </div>
     </main>
 </template>
@@ -47,47 +47,47 @@ function onFlip() {
 <style scoped lang="scss">
 
 main {
-    perspective: 3000px;
+    display: flex;
+    justify-content: center;
 }
 
 // CARD
 #card {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-color: transparent;
+    width: 354px;
+    height: 700px;
+    border: 1px solid #f1f1f1;
 }
 
-#card.flipped {
-    transform: rotateY(180deg)
+#card.flipped #card-inner {
+    transform: rotateY(180deg);
+}
+
+#card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
 }
 
 // FRONT AND BACK
-#card-front,
+#card-front, 
 #card-back {
-    // 3d shit
     width: 100%;
+    height: 100%;
     position: absolute;
-    -webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; 
     backface-visibility: hidden;
-
-    margin: 10px;
-    transition:
-        all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 
-    width: 300px;
-    height: calc(100vh - 240px);
-    // background: #F8F8F8;
-    // background: lime
     align-items: center;
-    border: 2px solid #000000;
-    border-radius: 16px;
-    padding-left: 24px;
-    padding-right: 24px;  
-    padding-top: 28px;
-    padding-bottom: 48px;
+    border: 1px solid #000000;
+    border-radius: 16px; 
+    padding: 24px;
     gap: 8px;
 }
 

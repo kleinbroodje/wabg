@@ -125,9 +125,18 @@ func handleJoinRoom(w http.ResponseWriter, r *http.Request) {
 		Conn: nil,
 	}
 
+	j, err := json.Marshal(room)
+	if err != nil {
+		http.Error(
+			w,
+			err.Error(),
+			http.StatusInternalServerError,
+		)
+		return
+	}
 	room.Players[playerId] = &player
-	w.WriteHeader(http.StatusOK)
-
+	w.WriteHeader(http.StatusCreated)
+	w.Write(j)
 }
 
 func generateRoomId(length int, currentRoomIds map[string]*Room) string {

@@ -3,5 +3,5 @@ import RoomSetup from '@/components/RoomSetup.vue';
 </script>
 
 <template>
-  <RoomSetup :game-id="'chameleon'"/>
+  <RoomSetup :gameId="'chameleon'"/>
 </template>
