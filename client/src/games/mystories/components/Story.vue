@@ -56,7 +56,6 @@ main {
     background-color: transparent;
     width: 354px;
     height: 700px;
-    border: 1px solid #f1f1f1;
 }
 
 #card.flipped #card-inner {
